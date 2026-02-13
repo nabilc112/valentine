@@ -84,18 +84,23 @@ function startGame() {
 function dodgeGame() {
   document.getElementById("game").innerHTML =
   "<h1>Game 2: Catch The Button</h1>" +
-  "<p>Try clicking it.</p>" +
+  "<p>Try tapping the button before it escapes!</p>" +
   "<button id='runBtn'>Click me</button>";
 
   const btn = document.getElementById("runBtn");
 
-  btn.onmouseover = function() {
+  // move the button randomly every 700ms
+  const interval = setInterval(function() {
     btn.style.position = "absolute";
-    btn.style.left = Math.random() * window.innerWidth + "px";
-    btn.style.top = Math.random() * window.innerHeight + "px";
-  };
+    btn.style.left = Math.random() * (window.innerWidth - 100) + "px";
+    btn.style.top = Math.random() * (window.innerHeight - 100) + "px";
+  }, 700);
 
-  btn.onclick = catReveal;
+  // when tapped, stop moving and go to cat reveal
+  btn.onclick = function() {
+    clearInterval(interval);
+    catReveal();
+  };
 }
 
 function catReveal() {
