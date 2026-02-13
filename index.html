@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Aamnah Game</title>
+<style>
+body {
+  background: #111;
+  color: white;
+  font-family: Arial, sans-serif;
+  text-align: center;
+  padding-top: 100px;
+  overflow: hidden;
+}
+
+h1 {
+  font-size: 36px;
+}
+
+p {
+  font-size: 18px;
+  max-width: 600px;
+  margin: auto;
+}
+
+button {
+  font-size: 18px;
+  padding: 12px 25px;
+  margin: 10px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+button:hover {
+  opacity: 0.8;
+}
+
+#cat {
+  position: absolute;
+  width: 120px;
+  top: 80%;
+  left: -150px;
+  transition: left 2s linear;
+}
+</style>
+</head>
+
+<body>
+
+<div id="game">
+  <h1>Aamnah</h1>
+  <p>This is a completely serious skill test.</p>
+  <button onclick="startGame()">Start</button>
+</div>
+
+<img id="cat" src="https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif">
+
+<script>
+
+function startGame() {
+  document.getElementById("game").innerHTML =
+  "<h1>Game 1: Reaction Test</h1>" +
+  "<p>Wait for the button to say CLICK. If you click too early you lose.</p>" +
+  "<button id='reactBtn'>Wait...</button>";
+
+  let clicked = false;
+
+  const btn = document.getElementById("reactBtn");
+
+  btn.onclick = function() {
+    if (!clicked) {
+      alert("Too early. Suspicious.");
+    }
+  };
+
+  setTimeout(function() {
+    clicked = true;
+    btn.innerText = "CLICK";
+    btn.style.background = "green";
+    btn.onclick = dodgeGame;
+  }, 2000 + Math.random() * 2000);
+}
+
+function dodgeGame() {
+  document.getElementById("game").innerHTML =
+  "<h1>Game 2: Catch The Button</h1>" +
+  "<p>Try clicking it.</p>" +
+  "<button id='runBtn'>Click me</button>";
+
+  const btn = document.getElementById("runBtn");
+
+  btn.onmouseover = function() {
+    btn.style.position = "absolute";
+    btn.style.left = Math.random() * window.innerWidth + "px";
+    btn.style.top = Math.random() * window.innerHeight + "px";
+  };
+
+  btn.onclick = catReveal;
+}
+
+function catReveal() {
+  document.getElementById("game").innerHTML =
+  "<h1>Bonus Unlocked</h1>" +
+  "<p>You earned this.</p>" +
+  "<button onclick='runCat()'>Reveal Bonus</button>";
+}
+
+function runCat() {
+  const cat = document.getElementById("cat");
+  cat.style.left = "110%";
+
+  document.getElementById("game").innerHTML =
+  "<h1>Yes. I named my cat after you.</h1>" +
+  "<p>That is the level of influence you have.</p>" +
+  "<button onclick='finalAsk()'>Continue</button>";
+}
+
+function finalAsk() {
+  document.getElementById("game").innerHTML =
+  "<h1>Final Question</h1>" +
+  "<p>We have known each other about a year. We have been dating a few weeks. You are funny, beautiful, and somehow cooler than me.</p>" +
+  "<p>Answer carefully.</p>" +
+  "<button onclick='sayYes()'>Be my Valentine</button>" +
+  "<button id='noBtn'>No</button>";
+
+  const noBtn = document.getElementById("noBtn");
+
+  noBtn.onmouseover = function() {
+    noBtn.style.position = "absolute";
+    noBtn.style.left = Math.random() * window.innerWidth + "px";
+    noBtn.style.top = Math.random() * window.innerHeight + "px";
+  };
+}
+
+function sayYes() {
+  document.body.innerHTML =
+  "<h1>Correct Answer</h1>" +
+  "<p>You win. No take backs.</p>";
+}
+
+</script>
+
+</body>
+</html>
